@@ -1,7 +1,7 @@
 # raivex.xyz 配置生成器
 
-纯静态 Shadowrocket 模块生成器。玩家的 UID 与 UUID 只在浏览器本地用于拼装配置，前端不向 GitHub 或其他站点提交这些值。服务端仍会验证 UUID 是否属于该 UID。
+纯静态 Shadowrocket 模块生成器。浏览器使用 `crypto.getRandomValues` 生成 64 位十六进制随机令牌。玩家提交 UID 与令牌给 VPS 后，管理员在独立的后端 WebUI 审核绑定；未获批准的令牌不能下载有效的订阅模块或上传抓包数据。前端不会向 GitHub 提交玩家信息。
 
-本仓库使用 GitHub Pages 发布到 `raivex.xyz/upload-data/`，根路径会跳转到该页面。UUID 由 Rust 后端在管理员添加白名单玩家时随机生成并持久保存，浏览器只使用玩家拿到的 UUID 生成配置，不会生成未入库的无效令牌。接收服务地址为 `https://api.raivex.xyz`，实际的 Rust/Axum 后端运行在 VPS；后端源代码位于私有仓库 `RaiV3x/MySekaiBot-Rust`。
+本仓库使用 GitHub Pages 发布到 `raivex.xyz/upload-data/`，根路径会跳转到该页面。管理 WebUI 仅由 VPS 后端在 `https://api.raivex.xyz/admin` 提供，不在前端显示。Rust/Axum 后端运行在 VPS；后端源代码位于私有仓库 `RaiV3x/MySekaiBot-Rust`。
 
-DNS 应将根域名 `raivex.xyz` 指向 GitHub Pages 官方 A/AAAA 记录，并将 `api.raivex.xyz` 指向 VPS。启用 Pages 的自定义域名与 HTTPS 后检查两端可访问。
+DNS 将根域名 `raivex.xyz` 指向 GitHub Pages；`api.raivex.xyz` 则通过 Cloudflare Tunnel 接入 VPS 本机运行的 Axum 服务。生产使用前需要确认 Pages 自定义域名 HTTPS 证书、API 路由及端到端抓包流程均正常。

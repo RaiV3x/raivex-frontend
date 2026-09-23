@@ -9,4 +9,4 @@ hostname = %APPEND% mkcn-prod-public-60001-1.dailygn.com
 ^https://mkcn-prod-public-60001-1\.dailygn\.com/api/user/{{UID}}/mysekai\?isForceAllReloadOnlyMysekai=False$ https://mkcn-prod-public-60001-1.dailygn.com/api/user/{{UID}}/mysekai?isForceAllReloadOnlyMysekai=True 307
 
 [Script]
-mysekaibot-cn-response = type=http-response,pattern=^https:\/\/mkcn-prod-public-60001-1\.dailygn\.com\/api\/user\/{{UID}}\/mysekai\?isForceAllReloadOnlyMysekai=True(?:&[^#]*)?$,requires-body=1,binary-body-mode=1,max-size=100000000,timeout=45,script-path={{BASE_URL}}/shadowrocket_mysekai_cn.js?v=0.1.0,argument="endpoint={{ENDPOINT}}&uid={{UID}}&uuid={{UUID}}&debug=0"
+mysekaibot-cn-response = type=http-response,pattern=^https:\/\/mkcn-prod-public-60001-1\.dailygn\.com\/api\/user\/{{UID}}\/mysekai\?isForceAllReloadOnlyMysekai=True(?:&[^#]*)?$,requires-body=1,binary-body-mode=1,max-size=100000000,timeout=45,script-path={{BASE_URL}}/shadowrocket_mysekai_cn.js?v=0.2.0,argument="endpoint={{ENDPOINT}}&uid={{UID}}&token={{TOKEN}}&debug=0"
