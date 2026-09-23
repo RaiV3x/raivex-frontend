@@ -1,0 +1,12 @@
+#!name=MySekaiBot · {{UID}}
+#!desc=仅捕获此玩家的国服 MySekai 完整地图响应
+#!author=MySekaiBot
+
+[MITM]
+hostname = %APPEND% mkcn-prod-public-60001-1.dailygn.com
+
+[URL Rewrite]
+^https://mkcn-prod-public-60001-1\.dailygn\.com/api/user/{{UID}}/mysekai\?isForceAllReloadOnlyMysekai=False$ https://mkcn-prod-public-60001-1.dailygn.com/api/user/{{UID}}/mysekai?isForceAllReloadOnlyMysekai=True 307
+
+[Script]
+mysekaibot-cn-response = type=http-response,pattern=^https:\/\/mkcn-prod-public-60001-1\.dailygn\.com\/api\/user\/{{UID}}\/mysekai\?isForceAllReloadOnlyMysekai=True(?:&[^#]*)?$,requires-body=1,binary-body-mode=1,max-size=100000000,timeout=45,script-path={{BASE_URL}}/shadowrocket_mysekai_cn.js?v=0.1.0,argument="endpoint={{ENDPOINT}}&uid={{UID}}&uuid={{UUID}}&debug=0"

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Shadowrocket 配置生成器 · MySekaiBot</title>
+<link rel="stylesheet" href="./static/style.css"><script src="./static/generator.js" defer></script></head>
+<body><div class="shell"><header class="topbar"><a class="brand" href="/">◈ <span>MySekaiBot</span></a><span class="tag">Shadowrocket · 国服</span></header>
+<main><section class="hero"><p class="eyebrow">CLIENT CONFIG GENERATOR</p><h1>专属模块，<br><em>一键生成。</em></h1>
+<p class="lead">填写管理员分配的游戏 UID 和 UUID，即时预览并下载你的 Shadowrocket 模块。表单内容只在浏览器中处理。</p></section>
+<div class="layout"><section class="card form-card"><div class="section-heading"><span class="step">01</span><div><h2>玩家配置</h2><p>每位白名单玩家都有独立 UUID</p></div></div>
+<label>接收服务地址<input id="server" type="url" autocomplete="off" spellcheck="false" placeholder="https://api.raivex.xyz"></label>
+<label>游戏用户 UID<input id="uid" inputmode="numeric" pattern="[0-9]{8,24}" autocomplete="off" placeholder="8–24 位数字"></label>
+<label>个人 UUID<input id="uuid" autocomplete="off" spellcheck="false" placeholder="管理员分配的 UUID"></label>
+<div class="hint"><strong>隐私提示</strong><p>UUID 是你的上传凭据。只导入自己的模块，不要转发配置或订阅链接。服务端仍会核对 UUID 与 UID 的绑定关系。</p></div>
+<p id="error" class="error" role="status"></p></section>
+<section class="card preview-card"><div class="section-heading"><span class="step">02</span><div><h2>实时预览</h2><p>生成后复制、下载，或添加远程订阅</p></div></div>
+<div class="preview-toolbar"><span class="file-name">mysekaibot_cn.sgmodule</span><span id="preview-status" class="status">等待填写</span></div>
+<pre id="preview">填写 UID 和 UUID 后，此处显示配置预览。</pre>
+<div class="actions"><button id="copy" class="primary" disabled>复制模块</button><button id="download" disabled>下载 .sgmodule</button><button id="copy-link" disabled>复制订阅链接</button></div>
+<p class="footnote">在 Shadowrocket 中导入模块，启用 MITM 并信任证书后，进入 MySekai 触发更新。</p></section></div></main>
+<footer>MySekaiBot · Rust / Axum <a href="https://api.raivex.xyz/admin">管理入口</a></footer></div></body></html>
