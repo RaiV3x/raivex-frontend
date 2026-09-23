@@ -7,10 +7,22 @@ const error = document.querySelector('#error');
 const copy = document.querySelector('#copy');
 const download = document.querySelector('#download');
 const copyLink = document.querySelector('#copy-link');
-server.value = location.hostname === 'raivex.xyz' ? 'https://api.raivex.xyz' : location.origin;
+server.value = 'https://api.raivex.xyz';
 let currentModule = '';
 let currentLink = '';
-let moduleTemplate = '';
+const moduleTemplate = String.raw`#!name=MySekaiBot · {{UID}}
+#!desc=仅捕获此玩家的国服 MySekai 完整地图响应
+#!author=MySekaiBot
+
+[MITM]
+hostname = %APPEND% mkcn-prod-public-60001-1.dailygn.com
+
+[URL Rewrite]
+^https://mkcn-prod-public-60001-1\.dailygn\.com/api/user/{{UID}}/mysekai\?isForceAllReloadOnlyMysekai=False$ https://mkcn-prod-public-60001-1.dailygn.com/api/user/{{UID}}/mysekai?isForceAllReloadOnlyMysekai=True 307
+
+[Script]
+mysekaibot-cn-response = type=http-response,pattern=^https:\/\/mkcn-prod-public-60001-1\.dailygn\.com\/api\/user\/{{UID}}\/mysekai\?isForceAllReloadOnlyMysekai=True(?:&[^#]*)?$,requires-body=1,binary-body-mode=1,max-size=100000000,timeout=45,script-path={{BASE_URL}}/shadowrocket_mysekai_cn.js?v=0.1.0,argument="endpoint={{ENDPOINT}}&uid={{UID}}&uuid={{UUID}}&debug=0"
+`;
 
 function valid() {
   const base = server.value.trim().replace(/\/+$/, '');
@@ -47,6 +59,4 @@ download.addEventListener('click', () => {
   const anchor = document.createElement('a'); anchor.href=url; anchor.download=`mysekaibot_${uid.value.trim()}.sgmodule`;
   anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
-fetch('./static/module.sgmodule').then(r => { if (!r.ok) throw new Error('template unavailable'); return r.text(); })
-  .then(text => { moduleTemplate=text; refresh(); })
-  .catch(() => { error.textContent='配置模板加载失败，请刷新页面。'; });
+refresh();
