@@ -2,21 +2,20 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0;url=/upload-data/">
-  <link rel="canonical" href="https://raivex.xyz/upload-data/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
   <title>国服 iOS 模块 · MySekaiBot</title>
-  <link rel="stylesheet" href="./static/style.css">
-  <script src="./static/generator.js?v=2" defer></script>
+  <link rel="canonical" href="https://raivex.xyz/upload-data/">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/generator.js?v=3" defer></script>
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar" aria-label="主导航">
-      <a class="sidebar-brand" href="/" aria-label="MySekaiBot 首页"><span class="brand-mark">M</span><span>MySekaiBot<small>MYSEKAI TOOLS</small></span></a>
+      <a class="sidebar-brand" href="/upload-data/" aria-label="MySekaiBot 首页"><span class="brand-mark">M</span><span>MySekaiBot<small>MYSEKAI TOOLS</small></span></a>
       <div class="sidebar-section">工具</div>
-      <nav class="side-nav" aria-label="工具导航"><a class="active" href="/" aria-current="page">iOS 模块</a><a href="https://api.raivex.xyz/admin">白名单管理</a></nav>
+      <nav class="side-nav" aria-label="工具导航"><a class="active" href="/upload-data/" aria-current="page">iOS 模块</a><a href="https://api.raivex.xyz/admin">白名单管理</a></nav>
       <div class="sidebar-foot">Shadowrocket · 国服<br>Rust / Axum</div>
     </aside>
     <div class="page-area">
@@ -24,14 +23,14 @@
       <main class="content">
         <section class="generator-card" aria-label="国服 iOS 模块生成器">
           <header class="card-header"><div class="header-icon">M</div><div><h1>国服 iOS 模块生成器</h1><p>为 Shadowrocket 生成专属的 MySekai 抓包模块。</p></div></header>
-          <div class="notice">UID 和 UUID 只用于在当前浏览器生成配置，不会提交给 GitHub。请勿分享模块或订阅链接。</div>
+          <div class="notice">UUID 由后端在管理员添加白名单玩家时随机生成，并与 UID 一一绑定。请勿分享模块或订阅链接。</div>
           <section class="step-section" aria-labelledby="config-title">
             <div class="step-heading"><span class="step-number">1</span><div><h2 id="config-title">配置</h2><p>确认代理软件、接收地址和玩家身份。</p></div></div>
             <div class="field-grid">
               <div class="field"><span class="field-label">代理软件</span><small>当前支持的 iOS 代理工具</small><div class="fixed-field">Shadowrocket</div></div>
               <div class="field"><span class="field-label">接收服务</span><small>由 Rust 后端接收国服数据</small><div class="fixed-field">api.raivex.xyz</div><input id="server" type="hidden" value="https://api.raivex.xyz"></div>
               <label class="field" for="uid"><span class="field-label">游戏 UID</span><small>你的国服游戏账号 UID</small><input id="uid" inputmode="numeric" pattern="[0-9]{8,24}" autocomplete="off" placeholder="8–24 位数字"></label>
-              <label class="field" for="uuid"><span class="field-label">个人 UUID</span><small>由白名单管理员分配，与你的 UID 对应</small><input id="uuid" autocomplete="off" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"></label>
+              <label class="field" for="uuid"><span class="field-label">个人 UUID</span><small>由后端随机生成，请填写管理员分配的 UUID</small><input id="uuid" autocomplete="off" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"></label>
             </div>
             <p id="error" class="error" role="status"></p>
           </section>
