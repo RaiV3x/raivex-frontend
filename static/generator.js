@@ -2,7 +2,6 @@
 const server = document.querySelector('#server');
 const uid = document.querySelector('#uid');
 const playerUuid = document.querySelector('#uuid');
-const preview = document.querySelector('#preview');
 const status = document.querySelector('#preview-status');
 const error = document.querySelector('#error');
 const copy = document.querySelector('#copy');
@@ -27,7 +26,7 @@ function refresh() {
   error.textContent = (uid.value || playerUuid.value) ? message : '';
   const ready = !message && !!moduleTemplate;
   [copy,download,copyLink].forEach(button => { button.disabled = !ready; });
-  if (!ready) { currentModule = ''; preview.textContent = '填写 UID 和 UUID 后，此处显示配置预览。'; status.textContent = '等待填写'; return; }
+  if (!ready) { currentModule = ''; status.textContent = '等待填写'; return; }
   const base = server.value.trim().replace(/\/+$/, '');
   const id = uid.value.trim();
   const credential = playerUuid.value.trim().toLowerCase();
@@ -37,7 +36,6 @@ function refresh() {
     .replaceAll('{{ENDPOINT}}',encodeURIComponent(`${base}/capture`))
     .replaceAll('{{UID}}',id)
     .replaceAll('{{UUID}}',credential);
-  preview.textContent = currentModule;
   status.textContent = '配置已生成';
 }
 for (const input of [server,uid,playerUuid]) input.addEventListener('input', refresh);

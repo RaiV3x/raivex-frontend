@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
-  <title>Shadowrocket 配置生成器 · MySekaiBot</title>
+  <title>国服 iOS 模块 · MySekaiBot</title>
   <link rel="stylesheet" href="./static/style.css">
   <script src="./static/generator.js" defer></script>
 </head>
@@ -14,32 +14,35 @@
     <aside class="sidebar" aria-label="主导航">
       <a class="sidebar-brand" href="/" aria-label="MySekaiBot 首页"><span class="brand-mark">M</span><span>MySekaiBot<small>MYSEKAI TOOLS</small></span></a>
       <div class="sidebar-section">工具</div>
-      <nav class="side-nav" aria-label="工具导航"><a class="active" href="/" aria-current="page">配置生成器</a><a href="https://api.raivex.xyz/admin">白名单管理</a></nav>
+      <nav class="side-nav" aria-label="工具导航"><a class="active" href="/" aria-current="page">iOS 模块</a><a href="https://api.raivex.xyz/admin">白名单管理</a></nav>
       <div class="sidebar-foot">Shadowrocket · 国服<br>Rust / Axum</div>
     </aside>
     <div class="page-area">
-      <header class="topbar"><span>MySekaiBot <span class="divider">/</span> 配置生成器</span><span class="topbar-badge">本地生成 · 不上传凭据</span></header>
+      <header class="topbar"><span>MySekaiBot <span class="divider">/</span> 国服 iOS 模块</span><span class="topbar-badge">仅在浏览器本地生成</span></header>
       <main class="content">
-        <div class="page-heading"><div><p class="eyebrow">SHADOWROCKET</p><h1>配置生成器</h1><p>填写游戏 UID 和专属 UUID，生成可直接导入 Shadowrocket 的 MySekai 抓包模块。</p></div></div>
-        <section class="workspace" aria-label="配置生成器">
-          <div class="intro"><h2>填写说明</h2><p>配置仅在当前浏览器中生成，不会向 GitHub 提交 UID 或 UUID。每位白名单玩家都有独立 UUID；请从管理员处获取自己的凭据，不要分享模块或订阅链接。</p></div>
-          <div class="workspace-grid">
-            <section class="form-panel" aria-labelledby="form-title">
-              <div class="section-title"><span class="section-icon">01</span><div><h2 id="form-title">玩家信息</h2><p>输入你的身份和接收服务地址</p></div></div>
-              <label for="server">接收服务地址<input id="server" type="url" autocomplete="off" spellcheck="false" placeholder="https://api.raivex.xyz"><small>通常无需修改，使用默认地址即可。</small></label>
-              <label for="uid">游戏 UID<input id="uid" inputmode="numeric" pattern="[0-9]{8,24}" autocomplete="off" placeholder="8–24 位数字"></label>
-              <label for="uuid">个人 UUID<input id="uuid" autocomplete="off" spellcheck="false" placeholder="管理员分配的 UUID"><small>UUID 与白名单中的 UID 一一对应。</small></label>
-              <p id="error" class="error" role="status"></p>
-              <div class="help-box"><strong>使用步骤</strong><ol><li>填写 UID 和个人 UUID，复制或下载右侧配置。</li><li>在 Shadowrocket 导入模块，启用 MITM 并信任证书。</li><li>进入 MySekai 触发更新，然后在 QQ 发送 <code>/绑定抓包 UID</code>。</li></ol></div>
-            </section>
-            <section class="preview-panel" aria-labelledby="preview-title">
-              <div class="section-title"><span class="section-icon">02</span><div><h2 id="preview-title">配置预览</h2><p>填写后实时更新</p></div></div>
-              <div class="preview-actions"><button id="copy" class="primary" disabled>复制配置</button><button id="download" disabled>下载模块</button><button id="copy-link" disabled>复制订阅链接</button></div>
-              <div class="preview-meta"><span>mysekaibot_cn.sgmodule</span><span id="preview-status" class="status">等待填写</span></div>
-              <pre id="preview">填写 UID 和 UUID 后，此处显示配置预览。</pre>
-              <p class="footnote">订阅链接包含你的 UUID，请勿转发给他人。</p>
-            </section>
-          </div>
+        <section class="generator-card" aria-label="国服 iOS 模块生成器">
+          <header class="card-header"><div class="header-icon">M</div><div><h1>国服 iOS 模块生成器</h1><p>为 Shadowrocket 生成专属的 MySekai 抓包模块。</p></div></header>
+          <div class="notice">UID 和 UUID 只用于在当前浏览器生成配置，不会提交给 GitHub。请勿分享模块或订阅链接。</div>
+          <section class="step-section" aria-labelledby="config-title">
+            <div class="step-heading"><span class="step-number">1</span><div><h2 id="config-title">配置</h2><p>确认代理软件、接收地址和玩家身份。</p></div></div>
+            <div class="field-grid">
+              <div class="field"><span class="field-label">代理软件</span><small>当前支持的 iOS 代理工具</small><div class="fixed-field">Shadowrocket</div></div>
+              <div class="field"><span class="field-label">接收服务</span><small>由 Rust 后端接收国服数据</small><div class="fixed-field">api.raivex.xyz</div><input id="server" type="hidden" value="https://api.raivex.xyz"></div>
+              <label class="field" for="uid"><span class="field-label">游戏 UID</span><small>你的国服游戏账号 UID</small><input id="uid" inputmode="numeric" pattern="[0-9]{8,24}" autocomplete="off" placeholder="8–24 位数字"></label>
+              <label class="field" for="uuid"><span class="field-label">个人 UUID</span><small>由白名单管理员分配，与你的 UID 对应</small><input id="uuid" autocomplete="off" spellcheck="false" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"></label>
+            </div>
+            <p id="error" class="error" role="status"></p>
+          </section>
+          <section class="step-section" aria-labelledby="scope-title">
+            <div class="step-heading"><span class="step-number">2</span><div><h2 id="scope-title">范围</h2><p>当前模块仅处理 Project SEKAI 国服 MySekai 数据。</p></div></div>
+            <div class="scope-list"><span class="scope-chip">✓ 国服</span><span class="scope-chip">✓ MySekai</span></div>
+          </section>
+          <section class="step-section last-step" aria-labelledby="install-title">
+            <div class="step-heading"><span class="step-number">3</span><div><h2 id="install-title">获取与安装</h2><p>填写信息后，可下载模块或复制订阅链接。</p></div></div>
+            <div class="install-status"><span>生成状态</span><strong id="preview-status" class="status">等待填写</strong></div>
+            <div class="actions"><button id="download" class="primary" disabled>下载 Shadowrocket 模块</button><button id="copy-link" disabled>复制订阅链接</button><button id="copy" disabled>复制模块</button></div>
+            <p class="install-help">将下载的模块导入 Shadowrocket，开启 MITM 并信任证书，进入 MySekai 触发更新。随后在 QQ 发送 <code>/绑定抓包 UID</code>。</p>
+          </section>
         </section>
         <footer>MySekaiBot · 非官方项目</footer>
       </main>
