@@ -75,7 +75,7 @@ claim.addEventListener('click', async () => {
       throw new Error(body.error || `接收端返回 HTTP ${response.status}`);
     }
     submittedKey = `${uid.value.trim()}:${playerToken.value.trim().toLowerCase()}`;
-    claimStatus.textContent = '申请已提交。管理员在 VPS WebUI 审核后，模块才会生效。';
+    claimStatus.textContent = '请求已接收。请联系管理员确认审核结果；批准后模块才会生效。';
     refresh();
   } catch (reason) {
     claimStatus.textContent = `提交失败：${reason.message || '网络不可用'}`;
