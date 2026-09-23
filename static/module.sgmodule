@@ -1,12 +1,13 @@
-#!name=MySekaiBot · {{UID}}
-#!desc=仅捕获此玩家的国服 MySekai 完整地图响应
+#!name=MySekaiBot 自动抓包（国服）
+#!desc=强制刷新并捕获国服 MySekai 完整地图响应，发送到 MySekaiBot 服务
 #!author=MySekaiBot
 
 [MITM]
 hostname = %APPEND% mkcn-prod-public-60001-1.dailygn.com
 
 [URL Rewrite]
-^https://mkcn-prod-public-60001-1\.dailygn\.com/api/user/{{UID}}/mysekai\?isForceAllReloadOnlyMysekai=False$ https://mkcn-prod-public-60001-1.dailygn.com/api/user/{{UID}}/mysekai?isForceAllReloadOnlyMysekai=True 307
+^https://mkcn-prod-public-60001-1\.dailygn\.com/api/user/(\d+)/mysekai\?isForceAllReloadOnlyMysekai=False$ https://mkcn-prod-public-60001-1.dailygn.com/api/user/$1/mysekai?isForceAllReloadOnlyMysekai=True 307
 
 [Script]
-mysekaibot-cn-response = type=http-response,pattern=^https:\/\/mkcn-prod-public-60001-1\.dailygn\.com\/api\/user\/{{UID}}\/mysekai\?isForceAllReloadOnlyMysekai=True(?:&[^#]*)?$,requires-body=1,binary-body-mode=1,max-size=100000000,timeout=45,script-path={{BASE_URL}}/shadowrocket_mysekai_cn.js?v=0.2.0,argument="endpoint={{ENDPOINT}}&uid={{UID}}&token={{TOKEN}}&debug=0"
+# 随机令牌已自动写入下方的 token 参数，无需手动修改。
+mysekaibot-cn-response = type=http-response,pattern=^https:\/\/mkcn-prod-public-60001-1\.dailygn\.com\/api\/user\/\d+\/mysekai\?isForceAllReloadOnlyMysekai=True(?:&[^#]*)?$,requires-body=1,binary-body-mode=1,max-size=100000000,timeout=45,script-path={{BASE_URL}}/shadowrocket_mysekai_cn.js?v=0.2.1,argument="endpoint={{ENDPOINT}}&token={{TOKEN}}&debug=0"

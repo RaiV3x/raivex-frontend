@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://api.raivex.xyz; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
   <title>国服 iOS 模块 · MySekaiBot</title>
   <link rel="canonical" href="https://raivex.xyz/upload-data/">
   <link rel="stylesheet" href="/static/style.css">
-  <script src="/static/generator.js?v=4" defer></script>
+  <link rel="stylesheet" href="/static/upload-data.css">
+  <script src="/static/generator.js?v=6" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -23,14 +24,13 @@
       <main class="content">
         <section class="generator-card" aria-label="国服 iOS 模块生成器">
           <header class="card-header"><div class="header-icon">M</div><div><h1>国服 iOS 模块生成器</h1><p>为 Shadowrocket 生成专属的 MySekai 抓包模块。</p></div></header>
-          <div class="notice">在此页面生成专属随机令牌。令牌只在当前浏览器生成；提交绑定申请后，须由管理员审核才会生效。请妥善保存，勿分享模块或订阅链接。</div>
+          <div class="notice">生成随机令牌即可取得 Shadowrocket 模块订阅地址，无需填写游戏 UID。首次抓包时后端识别 UID；仅白名单玩家且令牌获管理员批准后，数据才会被处理。请妥善保存令牌和订阅链接。</div>
           <section class="step-section" aria-labelledby="config-title">
-            <div class="step-heading"><span class="step-number">1</span><div><h2 id="config-title">配置</h2><p>确认代理软件、接收地址和玩家身份。</p></div></div>
+            <div class="step-heading"><span class="step-number">1</span><div><h2 id="config-title">配置</h2><p>生成自己的随机令牌，其他信息已预设。</p></div></div>
             <div class="field-grid">
               <div class="field"><span class="field-label">代理软件</span><small>当前支持的 iOS 代理工具</small><div class="fixed-field">Shadowrocket</div></div>
               <div class="field"><span class="field-label">接收服务</span><small>由 Rust 后端接收国服数据</small><div class="fixed-field">api.raivex.xyz</div><input id="server" type="hidden" value="https://api.raivex.xyz"></div>
-              <label class="field" for="uid"><span class="field-label">游戏 UID</span><small>你的国服游戏账号 UID</small><input id="uid" inputmode="numeric" pattern="[0-9]{8,24}" autocomplete="off" placeholder="8–24 位数字"></label>
-              <div class="field"><label class="field-label" for="token">随机令牌</label><small>点击按钮生成 64 位安全随机令牌</small><div class="token-control"><input id="token" autocomplete="off" spellcheck="false" placeholder="点击右侧按钮生成"><button id="generate-token" type="button">随机生成</button></div></div>
+              <div class="field token-field"><label class="field-label" for="token">随机令牌</label><small>点击按钮生成 64 位安全随机令牌</small><div class="token-control"><input id="token" autocomplete="off" spellcheck="false" placeholder="点击右侧按钮生成"><button id="generate-token" type="button">随机生成</button></div></div>
             </div>
             <p id="error" class="error" role="status"></p>
           </section>
@@ -39,11 +39,10 @@
             <div class="scope-list"><span class="scope-chip">✓ 国服</span><span class="scope-chip">✓ MySekai</span></div>
           </section>
           <section class="step-section last-step" aria-labelledby="install-title">
-            <div class="step-heading"><span class="step-number">3</span><div><h2 id="install-title">获取与安装</h2><p>提交绑定申请，管理员审核后即可使用模块。</p></div></div>
+            <div class="step-heading"><span class="step-number">3</span><div><h2 id="install-title">获取与安装</h2><p>复制订阅链接，在 Shadowrocket 中添加模块。</p></div></div>
             <div class="install-status"><span>生成状态</span><strong id="preview-status" class="status">等待填写</strong></div>
-            <div class="actions"><button id="claim" class="primary" disabled>提交绑定申请</button><button id="download" disabled>下载 Shadowrocket 模块</button><button id="copy-link" disabled>复制订阅链接</button></div>
-            <p id="claim-status" class="claim-status" role="status"></p>
-            <p class="install-help">令牌获批后，将模块导入 Shadowrocket，开启 MITM 并信任证书。私聊机器人发送 <code>/申请绑定 UID</code>；管理员审核 QQ 归属后，再发送 <code>/绑定抓包 UID</code>。进入 MySekai 触发更新即可。</p>
+            <div class="actions"><button id="copy-link" class="primary" disabled>复制订阅链接</button><button id="download" disabled>下载 Shadowrocket 模块</button></div>
+            <p class="install-help">Shadowrocket 会从订阅地址自动拉取完整模块，随机令牌作为脚本的 <code>token</code> 参数下发，无需手动修改。开启 MITM 并信任证书；首次抓包后请等待管理员审核令牌。随后私聊机器人发送 <code>/申请绑定 UID</code>，QQ 归属获批后再发送 <code>/绑定抓包 UID</code>。</p>
           </section>
         </section>
         <footer>MySekaiBot · 非官方项目</footer>
