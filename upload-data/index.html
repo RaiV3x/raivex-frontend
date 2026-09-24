@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
   <title>国服 iOS 模块 · MySekaiBot</title>
+  <link rel="icon" type="image/png" href="/static/crazy-dave.png">
   <link rel="canonical" href="https://raivex.xyz/upload-data/">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="/static/upload-data.css">
@@ -14,7 +15,7 @@
 <body>
   <div class="app-shell">
     <aside class="sidebar" aria-label="主导航">
-      <a class="sidebar-brand" href="/upload-data/" aria-label="MySekaiBot 首页"><span class="brand-mark">M</span><span>MySekaiBot<small>MYSEKAI TOOLS</small></span></a>
+      <a class="sidebar-brand" href="/upload-data/" aria-label="MySekaiBot 首页"><img class="brand-mark" src="/static/crazy-dave.png" alt="" width="32" height="32"><span>MySekaiBot<small>MYSEKAI TOOLS</small></span></a>
       <div class="sidebar-section">工具</div>
       <nav class="side-nav" aria-label="工具导航"><a class="active" href="/upload-data/" aria-current="page">iOS 模块</a></nav>
       <div class="sidebar-foot">Shadowrocket · 国服<br>Rust / Axum</div>
@@ -23,7 +24,7 @@
       <header class="topbar"><span>MySekaiBot <span class="divider">/</span> 国服 iOS 模块</span><span class="topbar-badge">仅在浏览器本地生成</span></header>
       <main class="content">
         <section class="generator-card" aria-label="国服 iOS 模块生成器">
-          <header class="card-header"><div class="header-icon">M</div><div><h1>国服 iOS 模块生成器</h1><p>为 Shadowrocket 生成专属的 MySekai 抓包模块。</p></div></header>
+          <header class="card-header"><img class="header-icon" src="/static/crazy-dave.png" alt="" width="30" height="30"><div><h1>国服 iOS 模块生成器</h1><p>为 Shadowrocket 生成专属的 MySekai 抓包模块。</p></div></header>
           <div class="notice">生成随机令牌即可取得 Shadowrocket 模块订阅地址，无需填写游戏 UID。首次抓包时后端识别 UID；仅白名单玩家且令牌获管理员批准后，数据才会被处理。请妥善保存令牌和订阅链接。</div>
           <section class="step-section" aria-labelledby="config-title">
             <div class="step-heading"><span class="step-number">1</span><div><h2 id="config-title">配置</h2><p>生成自己的随机令牌，其他信息已预设。</p></div></div>
