@@ -3,6 +3,7 @@ const server = document.querySelector('#server');
 const playerToken = document.querySelector('#token');
 const generateToken = document.querySelector('#generate-token');
 const status = document.querySelector('#preview-status');
+const subscriptionUrl = document.querySelector('#subscription-url');
 const error = document.querySelector('#error');
 const download = document.querySelector('#download');
 const copyLink = document.querySelector('#copy-link');
@@ -37,7 +38,15 @@ function refresh() {
   error.textContent = playerToken.value ? message : '';
   const ready = !message && !!moduleTemplate;
   [download,copyLink].forEach(button => { button.disabled = !ready; });
-  if (!ready) { currentModule = ''; status.textContent = '等待填写'; return; }
+  if (!ready) {
+    currentModule = '';
+    currentLink = '';
+    status.textContent = '等待生成';
+    status.className = 'status';
+    subscriptionUrl.textContent = '生成令牌后，这里会显示你的订阅地址';
+    subscriptionUrl.className = 'subscription-url';
+    return;
+  }
   const base = server.value.trim().replace(/\/+$/, '');
   const credential = playerToken.value.trim().toLowerCase();
   currentLink = `${base}/mysekaibot_cn.sgmodule?token=${credential}`;
@@ -46,6 +55,9 @@ function refresh() {
     .replaceAll('{{ENDPOINT}}',encodeURIComponent(`${base}/capture`))
     .replaceAll('{{TOKEN}}',credential);
   status.textContent = '模块可导入';
+  status.className = 'status ready';
+  subscriptionUrl.textContent = currentLink;
+  subscriptionUrl.className = 'subscription-url ready';
 }
 for (const input of [server,playerToken]) input.addEventListener('input', refresh);
 generateToken.addEventListener('click', () => {

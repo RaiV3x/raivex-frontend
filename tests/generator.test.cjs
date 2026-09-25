@@ -15,7 +15,7 @@ function field(value = '') {
 }
 
 test('generated token is embedded in a pullable Shadowrocket module URL', async () => {
-  const ids = ['server', 'token', 'generate-token', 'preview-status', 'error',
+  const ids = ['server', 'token', 'generate-token', 'preview-status', 'subscription-url', 'error',
     'download', 'copy-link'];
   const elements = Object.fromEntries(ids.map(id => [`#${id}`, field()]));
   const copied = [];
@@ -53,6 +53,7 @@ test('generated token is embedded in a pullable Shadowrocket module URL', async 
   await elements['#copy-link'].listeners.click();
   const expected = `https://api.raivex.xyz/mysekaibot_cn.sgmodule?token=${token}`;
   assert.equal(copied[0], expected);
+  assert.equal(elements['#subscription-url'].textContent, expected);
   elements['#download'].listeners.click();
   assert.equal(downloads.length, 1);
   assert.ok(downloads[0].startsWith(`#!url=${expected}\n`));
