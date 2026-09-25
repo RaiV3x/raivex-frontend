@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
-  <meta name="theme-color" content="#f7f8f6">
+  <meta name="theme-color" content="#1f1f21">
   <title>国服 iOS 模块 · MySekaiBot</title>
   <link rel="icon" type="image/png" href="/static/crazy-dave.png">
   <link rel="canonical" href="https://raivex.xyz/upload-data/">
-  <link rel="stylesheet" href="/static/style.css?v=7">
+  <link rel="stylesheet" href="/static/style.css?v=8">
   <script src="/static/generator.js?v=7" defer></script>
 </head>
 <body>
@@ -17,24 +17,27 @@
     <header class="site-header">
       <a class="brand" href="/upload-data/" aria-label="MySekaiBot 首页">
         <img src="/static/crazy-dave.png" alt="" width="38" height="38">
-        <span>MySekaiBot<small>MYSEKAI TOOLS</small></span>
+        <span>MySekaiBot</span>
       </a>
-      <span class="header-label"><span class="header-dot"></span> 国服 · iOS</span>
+      <nav class="top-nav" aria-label="页面导航">
+        <a class="active" href="/upload-data/" aria-current="page">国服模块</a>
+        <a href="#guide-title">使用帮助</a>
+        <a href="#privacy">数据说明</a>
+      </nav>
+      <span class="header-label"><span class="header-dot"></span> iOS / Shadowrocket</span>
     </header>
 
     <main>
       <section class="intro" aria-labelledby="page-title">
-        <div class="intro-copy">
-          <p class="eyebrow">SHADOWROCKET / CLIENT CONFIG</p>
-          <h1 id="page-title">你的 MySekai 模块，<br><span>一步生成。</span></h1>
-          <p class="intro-lead">生成随机令牌，复制地址，在 Shadowrocket 中添加模块。无需填写 UID。</p>
-        </div>
-        <div class="intro-aside"><span class="privacy-mark" aria-hidden="true">✦</span><strong>本地生成</strong><p>令牌不经本站上传。抓包权限需审核。</p></div>
+        <p class="eyebrow">MYSEKAI TOOLS</p>
+        <h1 id="page-title">国服 MySekai 模块</h1>
+        <p class="intro-lead">生成随机令牌，复制订阅地址，导入 Shadowrocket。无需填写 UID。</p>
+        <div class="intro-tags" aria-label="模块特点"><span>✦ 浏览器本地生成</span><span>◈ 国服专用</span><span>↗ 自动下发配置</span></div>
       </section>
 
       <div class="workspace">
         <section class="config-panel" aria-labelledby="config-title">
-          <div class="panel-heading"><div><p class="section-kicker">01 / GENERATE</p><h2 id="config-title">生成配置</h2></div><span class="panel-caption">仅支持国服 MySekai</span></div>
+          <div class="panel-heading"><div><p class="section-kicker">01 / GENERATE</p><h2 id="config-title">生成配置</h2></div><span class="panel-caption">Shadowrocket · 国服</span></div>
 
           <div class="preset-row" aria-label="预设配置">
             <div><span>代理软件</span><strong>Shadowrocket</strong></div>
@@ -58,7 +61,7 @@
           <p class="panel-footnote">订阅地址可直接导入 Shadowrocket，无需修改模块。</p>
         </section>
 
-        <aside class="guide-panel" aria-labelledby="guide-title">
+        <section class="guide-panel" aria-labelledby="guide-title">
           <p class="section-kicker">02 / SET UP</p><h2 id="guide-title">如何开始</h2>
           <ol class="guide-list">
             <li><span class="guide-index">01</span><div><strong>添加模块</strong><p>复制地址，导入 Shadowrocket。</p></div></li>
@@ -66,7 +69,7 @@
             <li><span class="guide-index">03</span><div><strong>审核与绑定</strong><p>审核通过后，私聊发送 <code>/d申请绑定 UID</code>；获批后发送 <code>/d绑定抓包 UID</code>。</p></div></li>
           </ol>
           <div class="guide-help">需要查看全部指令？<code>/dmshelp</code></div>
-        </aside>
+        </section>
       </div>
 
       <p id="privacy" class="disclaimer">仅支持国服 MySekai。令牌在浏览器本地生成；白名单与令牌审核通过后，抓包数据才会被处理。</p>
