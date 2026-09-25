@@ -63,3 +63,16 @@ test('generated token is embedded in a pullable Shadowrocket module URL', async 
   assert.ok(!downloads[0].includes('CHANGE_ME'));
   assert.ok(!downloads[0].includes('110.42.44.176:8787'));
 });
+
+test('ios-module is the canonical page and legacy entry points redirect', () => {
+  const page = readFileSync(path.join(__dirname, '..', 'upload-data', 'ios-module', 'index.html'), 'utf8');
+  const legacy = readFileSync(path.join(__dirname, '..', 'upload-data', 'index.html'), 'utf8');
+  const root = readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.match(page, /<h1 id="page-title">Dave Tools<\/h1>/);
+  assert.match(page, /id="token"/);
+  assert.match(page, /id="copy-link"/);
+  assert.doesNotMatch(page, /生成随机令牌，复制订阅地址，导入 Shadowrocket/);
+  for (const redirect of [legacy, root]) {
+    assert.match(redirect, /url=\/upload-data\/ios-module\//);
+  }
+});
