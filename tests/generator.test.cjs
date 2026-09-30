@@ -11,12 +11,13 @@ function field(value = '') {
     disabled: false,
     listeners: {},
     addEventListener(type, handler) { this.listeners[type] = handler; },
+    setAttribute(name,value) { this[name]=value; },
   };
 }
 
 test('generated token is embedded in a pullable Shadowrocket module URL', async () => {
   const ids = ['server', 'token', 'generate-token', 'preview-status', 'subscription-url', 'error',
-    'download', 'copy-link'];
+    'download', 'copy-link','toggle-token'];
   const elements = Object.fromEntries(ids.map(id => [`#${id}`, field()]));
   const copied = [];
   const downloads = [];
@@ -30,7 +31,7 @@ test('generated token is embedded in a pullable Shadowrocket module URL', async 
   const context = vm.createContext({
     document: {
       querySelector(selector) { return elements[selector]; },
-      createElement() { return { click() {} }; },
+      createElement() { return { click() { downloads.push(this.href); } }; },
     },
     crypto: {
       getRandomValues(bytes) { bytes.forEach((_, index) => { bytes[index] = index; }); return bytes; },
@@ -56,12 +57,7 @@ test('generated token is embedded in a pullable Shadowrocket module URL', async 
   assert.equal(elements['#subscription-url'].textContent, expected);
   elements['#download'].listeners.click();
   assert.equal(downloads.length, 1);
-  assert.ok(downloads[0].startsWith(`#!url=${expected}\n`));
-  assert.ok(downloads[0].includes(`&token=${token}&debug=0`));
-  assert.ok(!downloads[0].includes('&uid='));
-  assert.ok(downloads[0].includes('endpoint=https%3A%2F%2Fapi.raivex.xyz%2Fcapture'));
-  assert.ok(!downloads[0].includes('CHANGE_ME'));
-  assert.ok(!downloads[0].includes('110.42.44.176:8787'));
+  assert.equal(downloads[0],expected);
 });
 
 test('ios-module is the canonical page and legacy entry points redirect', () => {

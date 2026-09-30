@@ -9,8 +9,8 @@
   <title>Dave Tools · 国服 iOS 模块</title>
   <link rel="icon" type="image/png" href="/static/crazy-dave.png">
   <link rel="canonical" href="https://raivex.xyz/upload-data/ios-module/">
-  <link rel="stylesheet" href="/static/style.css?v=9">
-  <script src="/static/generator.js?v=7" defer></script>
+  <link rel="stylesheet" href="/static/style.css?v=10">
+  <script src="/static/generator.js?v=8" defer></script>
 </head>
 <body>
   <div class="site-shell">
@@ -36,25 +36,21 @@
         <section class="config-panel" aria-labelledby="config-title">
           <div class="panel-heading"><div><p class="section-kicker">01 / GENERATE</p><h2 id="config-title">生成配置</h2></div><span class="panel-caption">Shadowrocket · 国服</span></div>
 
-          <div class="preset-row" aria-label="预设配置">
-            <div><span>代理软件</span><strong>Shadowrocket</strong></div>
-            <div><span>接收服务</span><strong>api.raivex.xyz</strong></div>
-          </div>
           <input id="server" type="hidden" value="https://api.raivex.xyz">
 
           <div class="token-block">
-            <div class="field-heading"><label for="token">随机令牌</label><span>64 位 · 本地生成</span></div>
-            <div class="token-control"><input id="token" autocomplete="off" spellcheck="false" aria-describedby="token-note" placeholder="点击右侧按钮生成令牌"><button id="generate-token" type="button">生成令牌</button></div>
+            <div class="field-heading"><label for="token">随机令牌</label><button id="toggle-token" type="button" class="quiet-button" aria-pressed="false">显示令牌</button></div>
+            <div class="token-control"><input id="token" type="password" autocomplete="off" spellcheck="false" aria-describedby="token-note" maxlength="64" placeholder="生成新令牌，或粘贴已有令牌"><button id="generate-token" type="button">生成令牌</button></div>
             <p id="token-note" class="field-note">请保存令牌，不要分享给他人。</p>
           </div>
 
-          <div class="result-block" aria-live="polite">
+          <div class="result-block">
             <div class="result-heading"><span>模块订阅地址</span><strong id="preview-status" class="status">等待生成</strong></div>
-            <div id="subscription-url" class="subscription-url">生成令牌后，这里会显示你的订阅地址</div>
+            <div id="subscription-url" class="subscription-url" tabindex="0" aria-label="模块订阅地址">生成令牌后，这里会显示你的订阅地址</div>
             <p id="error" class="error" role="status"></p>
           </div>
 
-          <div class="actions"><button id="copy-link" class="primary" disabled>复制订阅地址 <span aria-hidden="true">↗</span></button><button id="download" disabled>下载 .sgmodule</button></div>
+          <div class="actions"><button id="copy-link" type="button" class="primary" disabled>复制订阅地址 <span aria-hidden="true">↗</span></button><button id="download" type="button" disabled>下载 .sgmodule</button></div>
           <p class="panel-footnote">订阅地址可直接导入 Shadowrocket，无需修改模块。</p>
         </section>
 
