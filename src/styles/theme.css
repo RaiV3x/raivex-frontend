@@ -6,11 +6,12 @@
   font-synthesis: none;
 }
 * { box-sizing: border-box; }
-html { min-width: 320px; scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; }
 #root { display: flex; flex-direction: column; min-height: 100vh; }
+@supports (min-height: 100svh) { body, #root { min-height: 100svh; } }
 .page-message { padding: 64px 20px; text-align: center; }
-button, input { font: inherit; }
+button, input { font: inherit; -webkit-appearance: none; appearance: none; }
 button { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 [hidden] { display: none !important; }
@@ -45,15 +46,15 @@ a { color: inherit; text-decoration: none; }
 .field-heading > span { color: #919097; font-size: 11px; }
 .token-block { margin-top: 28px; }
 .quiet-button { min-height: 28px; padding: 0 5px; border-color: transparent; background: transparent; color: #8de8df; font-size: 11px; }
-.token-control { display: flex; gap: 9px; margin-top: 11px; }
-.token-control input { min-width: 0; flex: 1; height: 44px; padding: 0 13px; border: 1px solid #48555d; border-radius: 9px; outline: none; background: #191f23; color: #eef3f4; font-size: 13px; }
+.token-control { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; margin-top: 11px; }
+.token-control input { min-width: 0; width: 100%; height: 44px; padding: 0 13px; border: 1px solid #48555d; border-radius: 9px; outline: none; background: #191f23; color: #eef3f4; font-size: 16px; }
 .token-control input::placeholder { color: #838289; }
 .token-control input:focus { border-color: #39c5bb; box-shadow: 0 0 0 3px #39c5bb29; }
 .field-note { margin: 8px 0 0; color: #8e8d94; font-size: 11px; line-height: 1.6; }
 .result-block { margin-top: 24px; padding-top: 22px; border-top: 1px solid #3c3c40; }
 .status { color: #a5a4aa; font-size: 11px; font-weight: 650; }
 .status.ready { color: #8de8df; }
-.subscription-url { min-height: 90px; margin-top: 11px; padding: 14px; border: 1px solid #414e56; border-radius: 9px; background: #191f23; color: #9ba8b0; font: 12px/1.7 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; user-select: all; }
+.subscription-url { min-width: 0; max-width: 100%; min-height: 90px; margin-top: 11px; padding: 14px; border: 1px solid #414e56; border-radius: 9px; background: #191f23; color: #9ba8b0; font: 12px/1.7 ui-monospace, SFMono-Regular, Consolas, monospace; word-break: break-all; overflow-wrap: anywhere; user-select: all; }
 .subscription-url:focus-visible { outline: 2px solid #39c5bb; outline-offset: 3px; }
 .subscription-url.ready { color: #d4d3d8; }
 .error, .feedback { min-height: 1.25em; margin: 8px 0 0; font-size: 11px; }
@@ -65,7 +66,7 @@ a { color: inherit; text-decoration: none; }
 .actions .primary:hover:not(:disabled) { border-color: #69ddd4; background: #69ddd4; }
 .actions .primary span { font-size: 16px; font-weight: 400; }
 .panel-footnote { margin: 13px 0 0; color: #98979e; font-size: 11px; line-height: 1.6; }
-button { min-height: 40px; padding: 0 14px; border: 1px solid #49494e; border-radius: 9px; background: #323236; color: #e2e1e6; font-size: 12px; font-weight: 650; transition: background .18s, border-color .18s; }
+button { min-width: 0; min-height: 44px; padding: 8px 14px; border: 1px solid #49494e; border-radius: 9px; background: #323236; color: #e2e1e6; font-size: 12px; font-weight: 650; line-height: 1.5; touch-action: manipulation; transition: background .18s, border-color .18s; }
 button:hover:not(:disabled) { border-color: #777078; background: #404045; }
 button:disabled { opacity: .47; cursor: not-allowed; }
 .guide-panel { padding: 24px 30px 22px; }
@@ -94,18 +95,30 @@ a:focus-visible, button:focus-visible { outline: 2px solid #39c5bb; outline-offs
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } button { transition: none; } }
 @media (max-width: 560px) {
-  .site-shell { padding: 0 16px; }
-  .header-label { font-size: 11px; }
-  .intro { padding: 51px 0 35px; }
-  .intro h1 { font-size: 36px; }
+  .site-shell { padding: 0 16px; padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+  .site-header { gap: 8px 12px; padding-top: max(12px, env(safe-area-inset-top)); }
+  .brand { font-size: 14px; }
+  .header-label { display: none; }
+  .top-nav { justify-content: space-between; gap: 4px; overflow: visible; flex-wrap: wrap; }
+  .top-nav a { flex: 1; padding: 10px 6px; font-size: 12px; text-align: center; }
+  .intro { padding: 32px 0 26px; }
+  .intro h1 { font-size: 32px; }
   .config-panel, .guide-panel { padding: 22px 18px; }
   .panel-caption { display: none; }
   .preset-row { gap: 8px; }
   .preset-row > div { padding: 11px; }
   .preset-row strong { font-size: 11px; }
-  .token-control, .actions { flex-direction: column; }
+  .token-control, .actions { display: grid; grid-template-columns: minmax(0, 1fr); }
   .token-control input, .token-control button, .actions button { width: 100%; }
   .token-control input { flex: none; min-height: 44px; }
-  .footer-inner { padding: 26px 18px 31px; }
-  .footer-inner nav { gap: 12px 19px; }
+  .token-control button, .actions button { min-height: 46px; font-size: 14px; }
+  .quiet-button { min-height: 44px; padding: 8px 0 8px 8px; font-size: 12px; }
+  .token-block { margin-top: 18px; }
+  .result-block { margin-top: 18px; padding-top: 18px; }
+  .field-note, .panel-footnote, .guide-help, .disclaimer { font-size: 12px; }
+  .guide-list p { font-size: 13px; }
+  .site-footer { margin-top: 36px; }
+  .footer-inner { padding: 22px 18px max(24px, env(safe-area-inset-bottom)); }
+  .footer-inner nav { gap: 8px 16px; }
+  .footer-inner nav a { padding: 8px 0; }
 }
