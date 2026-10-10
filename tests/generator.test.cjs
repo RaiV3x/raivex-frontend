@@ -64,9 +64,12 @@ test('ios-module is the canonical page and legacy entry points redirect', () => 
   const page = readFileSync(path.join(__dirname, '..', 'upload-data', 'ios-module', 'index.html'), 'utf8');
   const legacy = readFileSync(path.join(__dirname, '..', 'upload-data', 'index.html'), 'utf8');
   const root = readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-  assert.match(page, /<h1 id="page-title">Dave Tools<\/h1>/);
-  assert.match(page, /id="token"/);
-  assert.match(page, /id="copy-link"/);
+  assert.match(page, /<div id="root"><\/div>/);
+  assert.match(page, /\/src\/main.tsx/);
+  assert.match(page, /connect-src 'none'/);
+  const component = readFileSync(path.join(__dirname, '..', 'src', 'modules', 'ios-module', 'Page.tsx'), 'utf8');
+  assert.match(component, /<h1 id="page-title">Dave Tools<\/h1>/);
+  assert.doesNotMatch(component, /白名单|admin\./);
   assert.doesNotMatch(page, /生成随机令牌，复制订阅地址，导入 Shadowrocket/);
   for (const redirect of [legacy, root]) {
     assert.match(redirect, /url=\/upload-data\/ios-module\//);
