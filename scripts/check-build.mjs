@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import { readFileSync, readdirSync } from 'node:fs';
+
+const html = readFileSync('dist/upload-data/ios-module/index.html', 'utf8');
+assert.match(html, /name="viewport" content="width=device-width, initial-scale=1/);
+assert.match(html, /https:\/\/dave\.raivex\.xyz\//);
+const css = readdirSync('dist/assets').filter(name => name.endsWith('.css'))
+  .map(name => readFileSync(`dist/assets/${name}`, 'utf8')).join('\n');
+assert.doesNotMatch(css, /@media\s*\([^)]*[<>]=/, 'Media query ranges break older Safari mobile layout');
+assert.match(css, /@media\s*\(max-width:\s*560px\)/);
+assert.match(css, /@media\s*\(min-width:\s*900px\)/);
+assert.doesNotMatch(html, /admin\.|110\.42\.44\.176/);
+console.log('Production compatibility: viewport, Safari media queries, canonical domain OK');
