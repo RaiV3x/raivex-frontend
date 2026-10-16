@@ -10,4 +10,10 @@ assert.doesNotMatch(css, /@media\s*\([^)]*[<>]=/, 'Media query ranges break olde
 assert.match(css, /@media\s*\(max-width:\s*560px\)/);
 assert.match(css, /@media\s*\(min-width:\s*900px\)/);
 assert.doesNotMatch(html, /admin\.|110\.42\.44\.176/);
+for (const entry of ['dist/index.html', 'dist/upload-data/index.html']) {
+  const redirect = readFileSync(entry, 'utf8');
+  assert.match(redirect, /url=https:\/\/dave\.raivex\.xyz\/upload-data\/ios-module\//);
+  assert.match(redirect, /rel="canonical" href="https:\/\/dave\.raivex\.xyz\/upload-data\/ios-module\/"/);
+  assert.doesNotMatch(redirect, /https:\/\/raivex\.xyz\//);
+}
 console.log('Production compatibility: viewport, Safari media queries, canonical domain OK');

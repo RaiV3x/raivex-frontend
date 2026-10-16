@@ -73,7 +73,11 @@ test('ios-module is the canonical page and legacy entry points redirect', () => 
   assert.match(component, /<h1 id="page-title">Dave Tools<\/h1>/);
   assert.doesNotMatch(component, /白名单|admin\./);
   assert.doesNotMatch(page, /生成随机令牌，复制订阅地址，导入 Shadowrocket/);
-  for (const redirect of [legacy, root]) {
-    assert.match(redirect, /url=\/upload-data\/ios-module\//);
+  const publishedRoot = readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
+  const publishedLegacy = readFileSync(path.join(__dirname, '..', 'public', 'upload-data', 'index.html'), 'utf8');
+  for (const redirect of [legacy, root, publishedRoot, publishedLegacy]) {
+    assert.match(redirect, /url=https:\/\/dave\.raivex\.xyz\/upload-data\/ios-module\//);
+    assert.match(redirect, /rel="canonical" href="https:\/\/dave\.raivex\.xyz\/upload-data\/ios-module\/"/);
+    assert.doesNotMatch(redirect, /https:\/\/raivex\.xyz\//);
   }
 });
