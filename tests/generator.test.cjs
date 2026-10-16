@@ -52,7 +52,7 @@ test('generated token is embedded in a pullable Shadowrocket module URL', async 
   assert.equal(elements['#copy-link'].disabled, false);
 
   await elements['#copy-link'].listeners.click();
-  const expected = `https://api.raivex.xyz/mysekaibot_cn.sgmodule?token=${token}`;
+  const expected = `https://api.raivex.xyz:8443/mysekaibot_cn.sgmodule?token=${token}`;
   assert.equal(copied[0], expected);
   assert.equal(elements['#subscription-url'].textContent, expected);
   elements['#download'].listeners.click();

@@ -18,7 +18,7 @@ it('generates, hides, reveals and copies a pullable URL without player forms', a
   fireEvent.click(screen.getByRole('button', { name: '显示令牌' }));
   expect(input.type).toBe('text');
   fireEvent.click(copy);
-  await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`https://api.raivex.xyz/mysekaibot_cn.sgmodule?token=${input.value}`));
+  await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`https://api.raivex.xyz:8443/mysekaibot_cn.sgmodule?token=${input.value}`));
   expect(screen.queryByLabelText(/UID|白名单/)).toBeNull();
   expect(screen.getByRole('heading', { name: 'Dave Tools' })).toBeTruthy();
 });
@@ -38,7 +38,7 @@ it('validates pasted tokens and prevents unintended replacement', () => {
 });
 it('downloads via the public module endpoint and never stores the token', () => {
   const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
-    expect(this.href).toBe(`https://api.raivex.xyz/mysekaibot_cn.sgmodule?token=${token}`);
+    expect(this.href).toBe(`https://api.raivex.xyz:8443/mysekaibot_cn.sgmodule?token=${token}`);
     expect(this.referrerPolicy).toBe('no-referrer');
   });
   const store = vi.spyOn(Storage.prototype, 'setItem');

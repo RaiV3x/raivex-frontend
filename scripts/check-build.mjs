@@ -10,6 +10,10 @@ assert.doesNotMatch(css, /@media\s*\([^)]*[<>]=/, 'Media query ranges break olde
 assert.match(css, /@media\s*\(max-width:\s*560px\)/);
 assert.match(css, /@media\s*\(min-width:\s*900px\)/);
 assert.doesNotMatch(html, /admin\.|110\.42\.44\.176/);
+const scripts = readdirSync('dist/assets').filter(name => name.endsWith('.js'))
+  .map(name => readFileSync(`dist/assets/${name}`, 'utf8')).join('\n');
+assert.ok(scripts.includes('https://api.raivex.xyz:8443'), 'Production subscriptions must use the direct API port');
+assert.ok(!scripts.includes('upload.raivex.xyz'), 'Abandoned upload hostname must not be shipped');
 for (const entry of ['dist/index.html', 'dist/upload-data/index.html']) {
   const redirect = readFileSync(entry, 'utf8');
   assert.match(redirect, /url=https:\/\/dave\.raivex\.xyz\/upload-data\/ios-module\//);

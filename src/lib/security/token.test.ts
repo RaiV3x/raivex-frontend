@@ -16,7 +16,7 @@ describe('secure anonymous subscription tokens', () => {
       expect(normalizeToken(token)).toBeNull();
       expect(subscriptionUrl(token)).toBeNull();
     }
-    expect(subscriptionUrl('A'.repeat(64))).toBe(`https://api.raivex.xyz/mysekaibot_cn.sgmodule?token=${'a'.repeat(64)}`);
+    expect(subscriptionUrl('A'.repeat(64))).toBe(`https://api.raivex.xyz:8443/mysekaibot_cn.sgmodule?token=${'a'.repeat(64)}`);
   });
   it('fails closed if browser entropy is unavailable', () => {
     vi.spyOn(crypto, 'getRandomValues').mockImplementation(() => { throw new Error('unavailable'); });

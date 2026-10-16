@@ -8,7 +8,7 @@ const error = document.querySelector('#error');
 const download = document.querySelector('#download');
 const copyLink = document.querySelector('#copy-link');
 const toggleToken = document.querySelector('#toggle-token');
-server.value = 'https://api.raivex.xyz';
+server.value = 'https://api.raivex.xyz:8443';
 let currentLink = '';
 
 function valid() {

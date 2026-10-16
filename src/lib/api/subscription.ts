@@ -1,5 +1,5 @@
 import { normalizeToken } from '../security/token';
-const PUBLIC_API = 'https://api.raivex.xyz';
+const PUBLIC_API = 'https://api.raivex.xyz:8443';
 export function subscriptionUrl(value: string): string | null {
   const token = normalizeToken(value);
   if (!token) return null;
