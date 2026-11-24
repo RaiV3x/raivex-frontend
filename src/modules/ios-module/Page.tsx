@@ -6,7 +6,7 @@ const features = [
   {
     id: 'mysekai-cn',
     name: 'MySekai · 国服',
-    detail: '资源地图、资源汇总和生日刷新',
+    detail: '资源地图、资源汇总、生日刷新共用此订阅',
     Panel: SubscriptionPanel,
   },
   {
@@ -26,10 +26,10 @@ export default function IosModulePage() {
   }
 
   return <>
-    <div className="topbar" aria-label="当前位置">DaveBot <span>/</span> <strong>模块订阅</strong></div>
+    <div className="topbar" aria-label="当前位置">DaveBot <span>/</span> <strong>上传数据</strong></div>
     <header className="page-heading">
-      <h1 id="page-title">Shadowrocket 模块</h1>
-      <p>勾选要使用的功能，再复制订阅链接或下载模块文件。</p>
+      <h1 id="page-title">上传数据</h1>
+      <p>选择已发布的 iOS 功能，获取订阅链接后导入 Shadowrocket。</p>
     </header>
     <section className="panel feature-panel" id="features" aria-labelledby="feature-title">
       <div className="panel-heading">

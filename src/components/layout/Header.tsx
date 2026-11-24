@@ -5,7 +5,7 @@ export function Header() {
       <span>DaveBot</span>
     </a>
     <nav className="top-nav" aria-label="页面导航">
-      <a className="active" href="#features" aria-current="page">模块订阅</a>
+      <a className="active" href="/upload-data/" aria-current="page">上传数据</a>
       <a href="#guide-title">导入说明</a>
       <a href="https://docs.raivex.xyz/" target="_blank" rel="noopener noreferrer">使用文档<span aria-hidden="true"> ↗</span></a>
     </nav>

@@ -1,6 +1,10 @@
 import { lazy } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
 import type { ModuleId } from './catalog';
+
+const UploadPage = lazy(() => import('./ios-module/Page'));
+
 export const modulePages: Record<ModuleId, LazyExoticComponent<ComponentType>> = {
-  'ios-module': lazy(() => import('./ios-module/Page')),
+  'upload-data': UploadPage,
+  'ios-module': UploadPage,
 };

@@ -20,7 +20,7 @@ it('generates, hides, reveals and copies a pullable URL without player forms', a
   fireEvent.click(copy);
   await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`https://api.raivex.xyz:8443/mysekaibot_cn.sgmodule?token=${input.value}`));
   expect(screen.queryByLabelText(/UID|白名单/)).toBeNull();
-  expect(screen.getByRole('heading', { name: 'Shadowrocket 模块' })).toBeTruthy();
+  expect(screen.getByRole('heading', { name: '上传数据' })).toBeTruthy();
 });
 it('validates pasted tokens and prevents unintended replacement', () => {
   render(<Page />);

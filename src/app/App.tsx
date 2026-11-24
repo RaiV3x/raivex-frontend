@@ -19,7 +19,7 @@ export function App() {
   const Page = module && modulePages[module.id];
   return <SiteShell>
     <PageBoundary><Suspense fallback={<p className="page-message" role="status">加载中…</p>}>
-      {Page ? <Page /> : <p className="page-message">页面不存在。<a href="/upload-data/ios-module/">返回首页</a></p>}
+      {Page ? <Page /> : <p className="page-message">页面不存在。<a href="/upload-data/">返回首页</a></p>}
     </Suspense></PageBoundary>
   </SiteShell>;
 }
