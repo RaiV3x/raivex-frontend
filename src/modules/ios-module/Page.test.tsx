@@ -20,7 +20,7 @@ it('generates, hides, reveals and copies a pullable URL without player forms', a
   fireEvent.click(copy);
   await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`https://api.raivex.xyz:8443/mysekaibot_cn.sgmodule?token=${input.value}`));
   expect(screen.queryByLabelText(/UID|白名单/)).toBeNull();
-  expect(screen.getByRole('heading', { name: 'Dave Tools' })).toBeTruthy();
+  expect(screen.getByRole('heading', { name: 'Shadowrocket 模块' })).toBeTruthy();
 });
 it('validates pasted tokens and prevents unintended replacement', () => {
   render(<Page />);
@@ -59,4 +59,20 @@ it('reports clipboard failure and missing secure randomness without crashing', a
   fireEvent.click(screen.getByRole('button', { name: '生成令牌' }));
   expect(screen.getByRole('status').textContent).toContain('安全令牌');
   expect((screen.getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
+});
+
+it('shows subscriptions only for checked published features', () => {
+  render(<Page />);
+  const mysekai = screen.getByRole('checkbox', { name: 'MySekai · 国服' }) as HTMLInputElement;
+  const usersuite = screen.getByRole('checkbox', { name: 'UserSuite · B30 / B50' }) as HTMLInputElement;
+  expect(mysekai.checked).toBe(true);
+  expect(usersuite.disabled).toBe(true);
+  expect(usersuite.checked).toBe(false);
+  fireEvent.change(screen.getByLabelText('随机令牌'), { target: { value: token } });
+  fireEvent.click(mysekai);
+  expect(screen.queryByRole('button', { name: '复制订阅地址' })).toBeNull();
+  expect(screen.getByText('勾选一个可用功能以显示订阅链接。')).toBeTruthy();
+  fireEvent.click(mysekai);
+  expect((screen.getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
+  expect((screen.getByRole('button', { name: '复制订阅地址' }) as HTMLButtonElement).disabled).toBe(false);
 });

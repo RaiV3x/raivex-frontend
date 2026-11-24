@@ -1,12 +1,13 @@
-import { moduleCatalog } from '../../modules/catalog';
-import type { ModuleId } from '../../modules/catalog';
-export function Header({ activeId }: { activeId?: ModuleId }) {
+export function Header() {
   return <header className="site-header">
-    <a className="brand" href="/upload-data/ios-module/" aria-label="MySekaiBot 首页"><img src="/static/crazy-dave.png" alt="" width="38" height="38" /><span>MySekaiBot</span></a>
+    <a className="brand" href="/" aria-label="DaveBot 首页">
+      <img src="/static/crazy-dave.png" alt="" width="32" height="32" />
+      <span>DaveBot</span>
+    </a>
     <nav className="top-nav" aria-label="页面导航">
-      {moduleCatalog.map(module => <a key={module.id} className={module.id === activeId ? 'active' : undefined} href={module.route} aria-current={module.id === activeId ? 'page' : undefined}>{module.title}</a>)}
-      <a href="#guide-title">使用帮助</a><a href="#privacy">数据说明</a>
+      <a className="active" href="#features" aria-current="page">模块订阅</a>
+      <a href="#guide-title">导入说明</a>
+      <a href="https://docs.raivex.xyz/" target="_blank" rel="noopener noreferrer">使用文档<span aria-hidden="true"> ↗</span></a>
     </nav>
-    <span className="header-label"><span className="header-dot" /> iOS / Shadowrocket</span>
   </header>;
 }

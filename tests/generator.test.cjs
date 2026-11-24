@@ -70,7 +70,7 @@ test('ios-module is the canonical page and legacy entry points redirect', () => 
   assert.match(page, /https:\/\/dave\.raivex\.xyz\/upload-data\/ios-module\//);
   assert.equal(readFileSync(path.join(__dirname, '..', 'public', 'CNAME'), 'utf8').trim(), 'dave.raivex.xyz');
   const component = readFileSync(path.join(__dirname, '..', 'src', 'modules', 'ios-module', 'Page.tsx'), 'utf8');
-  assert.match(component, /<h1 id="page-title">Dave Tools<\/h1>/);
+  assert.match(component, /<h1 id="page-title">Shadowrocket 模块<\/h1>/);
   assert.doesNotMatch(component, /白名单|admin\./);
   assert.doesNotMatch(page, /生成随机令牌，复制订阅地址，导入 Shadowrocket/);
   const publishedRoot = readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
