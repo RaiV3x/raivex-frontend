@@ -61,17 +61,21 @@ it('reports clipboard failure and missing secure randomness without crashing', a
   expect((screen.getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
 });
 
-it('shows subscriptions only for checked published features', () => {
+it('shows submission methods only for selected data types', () => {
   render(<Page />);
-  const mysekai = screen.getByRole('checkbox', { name: 'MySekai · 国服' }) as HTMLInputElement;
-  const usersuite = screen.getByRole('checkbox', { name: 'UserSuite · B30 / B50' }) as HTMLInputElement;
+  const mysekai = screen.getByRole('checkbox', { name: 'MySekai 数据' }) as HTMLInputElement;
+  const usersuite = screen.getByRole('checkbox', { name: 'UserSuite 数据' }) as HTMLInputElement;
   expect(mysekai.checked).toBe(true);
-  expect(usersuite.disabled).toBe(true);
+  expect(usersuite.disabled).toBe(false);
   expect(usersuite.checked).toBe(false);
   fireEvent.change(screen.getByLabelText('随机令牌'), { target: { value: token } });
   fireEvent.click(mysekai);
   expect(screen.queryByRole('button', { name: '复制订阅地址' })).toBeNull();
-  expect(screen.getByText('勾选一个可用功能以显示订阅链接。')).toBeTruthy();
+  expect(screen.getByText('勾选数据类型以显示提交方式。')).toBeTruthy();
+  fireEvent.click(usersuite);
+  const upload = screen.getByRole('link', { name: '打开数据接收页' }) as HTMLAnchorElement;
+  expect(upload.href).toBe('https://admin.raivex.xyz/admin/usersuite');
+  expect(screen.queryByRole('button', { name: '下载 .sgmodule' })).toBeNull();
   fireEvent.click(mysekai);
   expect((screen.getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
   expect((screen.getByRole('button', { name: '复制订阅地址' }) as HTMLButtonElement).disabled).toBe(false);

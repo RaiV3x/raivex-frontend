@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { SetupGuide } from './components/SetupGuide';
 import { SubscriptionPanel } from './components/SubscriptionPanel';
+import { SuitePanel } from './components/SuitePanel';
 
 const features = [
   {
     id: 'mysekai-cn',
-    name: 'MySekai · 国服',
-    detail: '资源地图、资源汇总、生日刷新共用此订阅',
+    name: 'MySekai 数据',
+    detail: '国服 · 地图、资源与生日刷新共用此订阅',
     Panel: SubscriptionPanel,
   },
   {
     id: 'usersuite',
-    name: 'UserSuite · B30 / B50',
-    detail: '目前没有可订阅的 Shadowrocket 模块',
+    name: 'UserSuite 数据',
+    detail: '国服 / 日服 · 已授权的 Suite JSON',
+    Panel: SuitePanel,
   },
 ] as const;
 
@@ -29,22 +31,20 @@ export default function IosModulePage() {
     <div className="topbar" aria-label="当前位置">DaveBot <span>/</span> <strong>上传数据</strong></div>
     <header className="page-heading">
       <h1 id="page-title">上传数据</h1>
-      <p>选择已发布的 iOS 功能，获取订阅链接后导入 Shadowrocket。</p>
+      <p>选择要提交的数据类型。MySekai 使用 iOS 订阅，UserSuite 通过 DaveBot 后台提交。</p>
     </header>
     <section className="panel feature-panel" id="features" aria-labelledby="feature-title">
       <div className="panel-heading">
-        <h2 id="feature-title">选择功能</h2>
+        <h2 id="feature-title">选择数据类型</h2>
         <span className="selection-count">已选 {selected.length} 个</span>
       </div>
       <div className="feature-list">
         {features.map(feature => {
-          const available = 'Panel' in feature;
           const checked = selected.includes(feature.id);
-          return <label className={`feature${checked ? ' is-selected' : ''}${available ? '' : ' is-unavailable'}`} key={feature.id}>
+          return <label className={`feature${checked ? ' is-selected' : ''}`} key={feature.id}>
             <input
               type="checkbox"
               checked={checked}
-              disabled={!available}
               aria-labelledby={`${feature.id}-label`}
               aria-describedby={`${feature.id}-detail`}
               onChange={event => select(feature.id, event.currentTarget.checked)}
@@ -60,18 +60,17 @@ export default function IosModulePage() {
     <div className="workspace">
       <div className="subscriptions">
         {selected.length === 0 && <section className="panel config-panel">
-          <h2>模块订阅</h2>
-          <p className="empty-state">勾选一个可用功能以显示订阅链接。</p>
+          <h2>数据提交</h2>
+          <p className="empty-state">勾选数据类型以显示提交方式。</p>
         </section>}
         {features.map(feature => {
-          if (!('Panel' in feature)) return null;
           const { Panel } = feature;
           return <div key={feature.id} hidden={!selected.includes(feature.id)}>
             <Panel />
           </div>;
         })}
       </div>
-      <SetupGuide />
+      {selected.includes('mysekai-cn') && <SetupGuide />}
     </div>
     <p id="privacy" className="disclaimer">订阅地址含你的令牌。页面关闭后，需重新粘贴令牌才能恢复原地址。</p>
   </>;
