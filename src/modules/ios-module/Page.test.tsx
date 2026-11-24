@@ -73,8 +73,8 @@ it('shows submission methods only for selected data types', () => {
   expect(screen.queryByRole('button', { name: '复制订阅地址' })).toBeNull();
   expect(screen.getByText('勾选数据类型以显示提交方式。')).toBeTruthy();
   fireEvent.click(usersuite);
-  const upload = screen.getByRole('link', { name: '打开数据接收页' }) as HTMLAnchorElement;
-  expect(upload.href).toBe('https://admin.raivex.xyz/admin/usersuite');
+  const upload = screen.getByRole('link', { name: '下载 UserSuite 直连模块' }) as HTMLAnchorElement;
+  expect(upload.href).toBe('https://api.raivex.xyz:8443/usersuite.sgmodule');
   expect(screen.queryByRole('button', { name: '下载 .sgmodule' })).toBeNull();
   fireEvent.click(mysekai);
   expect((screen.getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);

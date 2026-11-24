@@ -13,7 +13,7 @@ const features = [
   {
     id: 'usersuite',
     name: 'UserSuite 数据',
-    detail: '国服 / 日服 · 已授权的 Suite JSON',
+    detail: '国服 / 日服 · IPv4 数据直连',
     Panel: SuitePanel,
   },
 ] as const;
@@ -31,7 +31,7 @@ export default function IosModulePage() {
     <div className="topbar" aria-label="当前位置">DaveBot <span>/</span> <strong>上传数据</strong></div>
     <header className="page-heading">
       <h1 id="page-title">上传数据</h1>
-      <p>选择要提交的数据类型。MySekai 使用 iOS 订阅，UserSuite 通过 DaveBot 后台提交。</p>
+      <p>勾选数据类型，获取对应的 Shadowrocket 模块。</p>
     </header>
     <section className="panel feature-panel" id="features" aria-labelledby="feature-title">
       <div className="panel-heading">
