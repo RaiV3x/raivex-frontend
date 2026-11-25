@@ -1,14 +1,17 @@
 import { useId } from 'react';
+import type { SubscriptionKind } from '../../../lib/api/subscription';
 import { useSubscription } from '../hooks/useSubscription';
 import { TokenField } from './TokenField';
 
-export function SubscriptionPanel() {
-  const state = useSubscription();
+export function SubscriptionPanel({
+  kind, title, region,
+}: { kind: SubscriptionKind; title: string; region: string }) {
+  const state = useSubscription(kind);
   const titleId = useId();
   return <section className="panel config-panel" aria-labelledby={titleId}>
     <div className="panel-heading">
-      <h2 id={titleId}>MySekai 订阅</h2>
-      <span className="panel-caption">国服</span>
+      <h2 id={titleId}>{title} 订阅</h2>
+      <span className="panel-caption">{region}</span>
     </div>
     <TokenField state={state} />
     <div className="result-block">

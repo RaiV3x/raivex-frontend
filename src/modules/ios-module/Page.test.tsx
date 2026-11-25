@@ -1,21 +1,23 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import Page from './Page';
 
 const token = 'a'.repeat(64);
+const mysekaiPanel = () => within(screen.getByRole('region', { name: 'MySekai 订阅' }));
+const suitePanel = () => within(screen.getByRole('region', { name: 'UserSuite 订阅' }));
 beforeEach(() => {
   Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: vi.fn().mockResolvedValue(undefined) } });
 });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 it('generates, hides, reveals and copies a pullable URL without player forms', async () => {
   render(<Page />);
-  const copy = screen.getByRole('button', { name: /复制订阅地址/ }) as HTMLButtonElement;
+  const copy = mysekaiPanel().getByRole('button', { name: /复制订阅地址/ }) as HTMLButtonElement;
   expect(copy.disabled).toBe(true);
-  fireEvent.click(screen.getByRole('button', { name: '生成令牌' }));
-  const input = screen.getByLabelText('随机令牌') as HTMLInputElement;
+  fireEvent.click(mysekaiPanel().getByRole('button', { name: '生成令牌' }));
+  const input = mysekaiPanel().getByLabelText('随机令牌') as HTMLInputElement;
   expect(input.value).toMatch(/^[0-9a-f]{64}$/);
   expect(input.type).toBe('password');
-  fireEvent.click(screen.getByRole('button', { name: '显示令牌' }));
+  fireEvent.click(mysekaiPanel().getByRole('button', { name: '显示令牌' }));
   expect(input.type).toBe('text');
   fireEvent.click(copy);
   await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`https://api.raivex.xyz:8443/mysekaibot_cn.sgmodule?token=${input.value}`));
@@ -24,16 +26,16 @@ it('generates, hides, reveals and copies a pullable URL without player forms', a
 });
 it('validates pasted tokens and prevents unintended replacement', () => {
   render(<Page />);
-  const input = screen.getByLabelText('随机令牌') as HTMLInputElement;
+  const input = mysekaiPanel().getByLabelText('随机令牌') as HTMLInputElement;
   fireEvent.change(input, { target: { value: 'bad' } });
-  expect(screen.getByRole('status').textContent).toContain('64 位');
-  expect((screen.getByRole('button', { name: /复制订阅地址/ }) as HTMLButtonElement).disabled).toBe(true);
+  expect(mysekaiPanel().getByRole('status').textContent).toContain('64 位');
+  expect((mysekaiPanel().getByRole('button', { name: /复制订阅地址/ }) as HTMLButtonElement).disabled).toBe(true);
   fireEvent.change(input, { target: { value: token } });
   vi.spyOn(window, 'confirm').mockReturnValue(false);
-  fireEvent.click(screen.getByRole('button', { name: '生成令牌' }));
+  fireEvent.click(mysekaiPanel().getByRole('button', { name: '生成令牌' }));
   expect(input.value).toBe(token);
   vi.spyOn(window, 'confirm').mockReturnValue(true);
-  fireEvent.click(screen.getByRole('button', { name: '生成令牌' }));
+  fireEvent.click(mysekaiPanel().getByRole('button', { name: '生成令牌' }));
   expect(input.value).not.toBe(token);
 });
 it('downloads via the public module endpoint and never stores the token', () => {
@@ -43,40 +45,51 @@ it('downloads via the public module endpoint and never stores the token', () => 
   });
   const store = vi.spyOn(Storage.prototype, 'setItem');
   render(<Page />);
-  fireEvent.change(screen.getByLabelText('随机令牌'), { target: { value: token } });
-  fireEvent.click(screen.getByRole('button', { name: '下载 .sgmodule' }));
+  fireEvent.change(mysekaiPanel().getByLabelText('随机令牌'), { target: { value: token } });
+  fireEvent.click(mysekaiPanel().getByRole('button', { name: '下载 .sgmodule' }));
   expect(click).toHaveBeenCalledOnce();
   expect(store).not.toHaveBeenCalled();
 });
 it('reports clipboard failure and missing secure randomness without crashing', async () => {
   render(<Page />);
-  fireEvent.change(screen.getByLabelText('随机令牌'), { target: { value: token } });
+  fireEvent.change(mysekaiPanel().getByLabelText('随机令牌'), { target: { value: token } });
   vi.mocked(navigator.clipboard.writeText).mockRejectedValue(new Error('denied'));
-  fireEvent.click(screen.getByRole('button', { name: /复制订阅地址/ }));
-  await waitFor(() => expect(screen.getByRole('status').textContent).toContain('手动复制'));
+  fireEvent.click(mysekaiPanel().getByRole('button', { name: /复制订阅地址/ }));
+  await waitFor(() => expect(mysekaiPanel().getByRole('status').textContent).toContain('手动复制'));
   vi.spyOn(window, 'confirm').mockReturnValue(true);
   vi.spyOn(crypto, 'getRandomValues').mockImplementation(() => { throw new Error('unavailable'); });
-  fireEvent.click(screen.getByRole('button', { name: '生成令牌' }));
-  expect(screen.getByRole('status').textContent).toContain('安全令牌');
-  expect((screen.getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
+  fireEvent.click(mysekaiPanel().getByRole('button', { name: '生成令牌' }));
+  expect(mysekaiPanel().getByRole('status').textContent).toContain('安全令牌');
+  expect((mysekaiPanel().getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
 });
 
-it('shows submission methods only for selected data types', () => {
+it('shows both subscriptions by default and preserves their separate tokens when toggled', async () => {
   render(<Page />);
   const mysekai = screen.getByRole('checkbox', { name: 'MySekai 数据' }) as HTMLInputElement;
   const usersuite = screen.getByRole('checkbox', { name: 'UserSuite 数据' }) as HTMLInputElement;
   expect(mysekai.checked).toBe(true);
-  expect(usersuite.disabled).toBe(false);
-  expect(usersuite.checked).toBe(false);
-  fireEvent.change(screen.getByLabelText('随机令牌'), { target: { value: token } });
+  expect(usersuite.checked).toBe(true);
+  fireEvent.change(mysekaiPanel().getByLabelText('随机令牌'), { target: { value: token } });
+  fireEvent.click(suitePanel().getByRole('button', { name: '生成令牌' }));
+  const suiteToken = (suitePanel().getByLabelText('随机令牌') as HTMLInputElement).value;
+  expect(suiteToken).toMatch(/^[0-9a-f]{64}$/);
+  expect(suiteToken).not.toBe(token);
+  fireEvent.click(suitePanel().getByRole('button', { name: '复制订阅地址' }));
+  const suiteUrl = `https://api.raivex.xyz:8443/usersuite.sgmodule?token=${suiteToken}`;
+  await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith(suiteUrl));
+  const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+    expect(this.href).toBe(suiteUrl);
+  });
+  fireEvent.click(suitePanel().getByRole('button', { name: '下载 .sgmodule' }));
+  expect(click).toHaveBeenCalledOnce();
+
   fireEvent.click(mysekai);
-  expect(screen.queryByRole('button', { name: '复制订阅地址' })).toBeNull();
-  expect(screen.getByText('勾选数据类型以显示提交方式。')).toBeTruthy();
+  expect(screen.queryByRole('region', { name: 'MySekai 订阅' })).toBeNull();
+  expect(suitePanel().getByLabelText('随机令牌')).toBeTruthy();
   fireEvent.click(usersuite);
-  const upload = screen.getByRole('link', { name: '下载 UserSuite 直连模块' }) as HTMLAnchorElement;
-  expect(upload.href).toBe('https://api.raivex.xyz:8443/usersuite.sgmodule');
-  expect(screen.queryByRole('button', { name: '下载 .sgmodule' })).toBeNull();
+  expect(screen.getByText('勾选数据类型以显示提交方式。')).toBeTruthy();
   fireEvent.click(mysekai);
-  expect((screen.getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
-  expect((screen.getByRole('button', { name: '复制订阅地址' }) as HTMLButtonElement).disabled).toBe(false);
+  fireEvent.click(usersuite);
+  expect((mysekaiPanel().getByLabelText('随机令牌') as HTMLInputElement).value).toBe(token);
+  expect((suitePanel().getByLabelText('随机令牌') as HTMLInputElement).value).toBe(suiteToken);
 });

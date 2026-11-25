@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { generateToken } from '../../../lib/security/token';
-import { downloadSubscription, subscriptionUrl } from '../../../lib/api/subscription';
-export function useSubscription() {
+import { downloadSubscription, subscriptionUrl, type SubscriptionKind } from '../../../lib/api/subscription';
+export function useSubscription(kind: SubscriptionKind) {
   const [token, setToken] = useState('');
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
-  const url = subscriptionUrl(token);
+  const url = subscriptionUrl(token, kind);
   const error = token && !url ? '请输入 64 位十六进制随机令牌。' : '';
   function changeToken(value: string) { setToken(value); setMessage(''); }
   function generate() {

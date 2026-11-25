@@ -1,27 +1,28 @@
 import { useState } from 'react';
 import { SetupGuide } from './components/SetupGuide';
 import { SubscriptionPanel } from './components/SubscriptionPanel';
-import { SuitePanel } from './components/SuitePanel';
 
 const features = [
   {
     id: 'mysekai-cn',
     name: 'MySekai 数据',
     detail: '国服 · 地图、资源与生日刷新共用此订阅',
-    Panel: SubscriptionPanel,
+    title: 'MySekai',
+    region: '国服',
   },
   {
     id: 'usersuite',
     name: 'UserSuite 数据',
     detail: '国服 / 日服 · IPv4 数据直连',
-    Panel: SuitePanel,
+    title: 'UserSuite',
+    region: '国服 / 日服',
   },
 ] as const;
 
 type FeatureId = typeof features[number]['id'];
 
 export default function IosModulePage() {
-  const [selected, setSelected] = useState<FeatureId[]>(['mysekai-cn']);
+  const [selected, setSelected] = useState<FeatureId[]>(() => features.map(feature => feature.id));
 
   function select(id: FeatureId, checked: boolean) {
     setSelected(current => checked ? [...current, id] : current.filter(item => item !== id));
@@ -31,7 +32,7 @@ export default function IosModulePage() {
     <div className="topbar" aria-label="当前位置">DaveBot <span>/</span> <strong>上传数据</strong></div>
     <header className="page-heading">
       <h1 id="page-title">上传数据</h1>
-      <p>勾选数据类型，获取对应的 Shadowrocket 模块。</p>
+      <p>选择数据类型，为各自的 Shadowrocket 模块生成订阅。</p>
     </header>
     <section className="panel feature-panel" id="features" aria-labelledby="feature-title">
       <div className="panel-heading">
@@ -63,12 +64,9 @@ export default function IosModulePage() {
           <h2>数据提交</h2>
           <p className="empty-state">勾选数据类型以显示提交方式。</p>
         </section>}
-        {features.map(feature => {
-          const { Panel } = feature;
-          return <div key={feature.id} hidden={!selected.includes(feature.id)}>
-            <Panel />
-          </div>;
-        })}
+        {features.map(feature => <div key={feature.id} hidden={!selected.includes(feature.id)}>
+          <SubscriptionPanel kind={feature.id} title={feature.title} region={feature.region} />
+        </div>)}
       </div>
       {selected.includes('mysekai-cn') && <SetupGuide />}
     </div>
