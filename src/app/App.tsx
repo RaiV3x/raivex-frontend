@@ -1,6 +1,6 @@
 import { Component, Suspense } from 'react';
 import type { ReactNode } from 'react';
-import { moduleCatalog } from '../modules/catalog';
+import { MODULE_PATH, moduleCatalog } from '../modules/catalog';
 import { modulePages } from '../modules/registry';
 import { SiteShell } from '../components/layout/SiteShell';
 
@@ -19,7 +19,7 @@ export function App() {
   const Page = module && modulePages[module.id];
   return <SiteShell>
     <PageBoundary><Suspense fallback={<p className="page-message" role="status">加载中…</p>}>
-      {Page ? <Page /> : <p className="page-message">页面不存在。<a href="/upload-data/">返回首页</a></p>}
+      {Page ? <Page /> : <p className="page-message">页面不存在。<a href={MODULE_PATH}>返回首页</a></p>}
     </Suspense></PageBoundary>
   </SiteShell>;
 }

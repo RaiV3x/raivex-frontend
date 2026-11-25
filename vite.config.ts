@@ -10,7 +10,13 @@ export default defineConfig({
     // Preserve traditional media-query syntax for older iOS/WebKit clients.
     cssTarget: 'safari14',
     modulePreload: { polyfill: false },
-    rollupOptions: { input: Object.fromEntries(moduleCatalog.map(module => [module.id, module.entry])) },
+    rollupOptions: {
+      input: {
+        home: 'index.html',
+        legacyUploadRedirect: 'upload-data/index.html',
+        ...Object.fromEntries(moduleCatalog.map(module => [module.id, module.entry])),
+      },
+    },
   },
   test: { environment: 'jsdom', include: ['src/**/*.test.{ts,tsx}'], clearMocks: true },
 });
