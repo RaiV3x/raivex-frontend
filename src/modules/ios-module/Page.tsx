@@ -13,9 +13,9 @@ const features = [
   {
     id: 'usersuite',
     name: 'UserSuite 数据',
-    detail: '国服白名单 · IPv4 数据直连',
+    detail: '国服 · IPv4 数据直连',
     title: 'UserSuite',
-    region: '国服白名单',
+    region: '国服',
   },
 ] as const;
 
