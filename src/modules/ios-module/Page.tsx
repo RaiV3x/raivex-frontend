@@ -13,7 +13,7 @@ const features = [
   {
     id: 'usersuite',
     name: 'UserSuite 数据',
-    detail: '国服 · IPv4 数据直连',
+    detail: '国服 · 状态通知',
     title: 'UserSuite',
     region: '国服',
   },
